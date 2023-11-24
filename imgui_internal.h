@@ -1619,6 +1619,8 @@ enum ImGuiDockNodeFlagsPrivate_
     ImGuiDockNodeFlags_NoDockingOverEmpty       = 1 << 21,  // [EXPERIMENTAL] Prevent this node to be docked over an empty node (e.g. DockSpace with no other windows)
     ImGuiDockNodeFlags_NoResizeX                = 1 << 22,  // [EXPERIMENTAL]
     ImGuiDockNodeFlags_NoResizeY                = 1 << 23,  // [EXPERIMENTAL]
+    ImGuiDockNodeFlags_TabBarCollapsed          = 1 << 24,  // [LOCUS]       // Only visually collapses tab bar. HiddenTabBar runs different functions that changes tab bar behavior.
+    ImGuiDockNodeFlags_WindowRounding           = 1 << 25,  // [LOCUS]       // Applies window rounding to dockspace windows.
     ImGuiDockNodeFlags_SharedFlagsInheritMask_  = ~0,
     ImGuiDockNodeFlags_NoResizeFlagsMask_       = ImGuiDockNodeFlags_NoResize | ImGuiDockNodeFlags_NoResizeX | ImGuiDockNodeFlags_NoResizeY,
     ImGuiDockNodeFlags_LocalFlagsMask_          = ImGuiDockNodeFlags_NoSplit | ImGuiDockNodeFlags_NoResizeFlagsMask_ | ImGuiDockNodeFlags_AutoHideTabBar | ImGuiDockNodeFlags_DockSpace | ImGuiDockNodeFlags_CentralNode | ImGuiDockNodeFlags_NoTabBar | ImGuiDockNodeFlags_HiddenTabBar | ImGuiDockNodeFlags_NoWindowMenuButton | ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoDocking,
@@ -1695,6 +1697,8 @@ struct IMGUI_API ImGuiDockNode
     bool                    IsFloatingNode() const  { return ParentNode == NULL && (MergedFlags & ImGuiDockNodeFlags_DockSpace) == 0; }
     bool                    IsCentralNode() const   { return (MergedFlags & ImGuiDockNodeFlags_CentralNode) != 0; }
     bool                    IsHiddenTabBar() const  { return (MergedFlags & ImGuiDockNodeFlags_HiddenTabBar) != 0; } // Hidden tab bar can be shown back by clicking the small triangle
+    bool                    IsTabBarCollapsed() const { return (MergedFlags & ImGuiDockNodeFlags_TabBarCollapsed) != 0; } // [LOCUS] Hide tabbar, retains tabbar logic
+    bool                    IsWindowRounding() const { return (MergedFlags & ImGuiDockNodeFlags_WindowRounding) != 0; }   // [LOCUS] Round corners for dockspace windows
     bool                    IsNoTabBar() const      { return (MergedFlags & ImGuiDockNodeFlags_NoTabBar) != 0; }     // Never show a tab bar
     bool                    IsSplitNode() const     { return ChildNodes[0] != NULL; }
     bool                    IsLeafNode() const      { return ChildNodes[0] == NULL; }
