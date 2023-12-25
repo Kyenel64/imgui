@@ -6952,8 +6952,14 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         bool handle_borders_and_resize_grips = (window->DockNodeAsHost || !window->DockIsActive);
 
         // [LOCUS] Enable borders if window rounding is enabled. Add docknode flags for enabling borders if needed.
-        if (window->Flags & ImGuiWindowFlags_DockedWindowBorder && !window->DockNode->IsFloatingNode())
-            handle_borders_and_resize_grips = true;
+        if (window->Flags & ImGuiWindowFlags_DockedWindowBorder)
+        {
+            if (window->DockNode)
+            {
+                if (!window->DockNode->IsFloatingNode())
+                    handle_borders_and_resize_grips = true;
+            }
+        }
 
         // Handle manual resize: Resize Grips, Borders, Gamepad
         int border_held = -1;
